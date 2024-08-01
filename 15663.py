@@ -1,17 +1,19 @@
-N, M = map(int, input().split())
-
-nums = list(map(int, input().split()))
-nums.sort()
-s = []
-
-
-def dfs(start):
+def dfs():
+    check = -1
     if len(s) == M:
-        print(' '.join(map(str, s)))
+        print(*s)
         return
-    for i in range(0, N):
-        if(i == start):
-            continue
-        s.append(nums[i])
-        dfs(i)
-        s.pop()
+    for i in range(N):
+        if check != nums[i] and not visited[i]:
+            s.append(nums[i])
+            visited[i] = True
+            check = nums[i]
+            dfs()
+            s.pop()
+            visited[i] = False
+    
+N, M = map(int, input().split())
+nums = sorted(list(map(int, input().split())))
+visited = [False] * N
+s = []
+dfs()
